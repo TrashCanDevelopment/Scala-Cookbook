@@ -37,10 +37,10 @@ object SomethingWithMain {
     println(4 match {
       case Even(half) => half
     }) // 2
-    println(
-      3 match {
-        case Even(half) => half
-      }) // scala.MatchError
+//    println(
+//      3 match {
+//        case Even(half) => half
+//      }) // scala.MatchError
 
     for (i: Int <- 1 to 3) println(" ")
   }
