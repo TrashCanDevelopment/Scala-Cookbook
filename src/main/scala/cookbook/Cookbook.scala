@@ -1,23 +1,22 @@
 package cookbook
 
-class Recipe private (
-    val ingredients: List[String] = List.empty,
-    val directions: List[String] = List.empty) {
-  println("Ingredients: " + ingredients.mkString(", "))
-  println("Directions: " + directions.mkString(", "))
-}
+class Recipe(val ingredients: List[String], val directions: List[String])
 
 object Recipe {
-  def make(ingredients: List[String], directions: List[String]): Recipe = {
+  def apply(
+      ingredients: List[String] = List.empty,
+      directions: List[String] = List.empty): Recipe = {
     new Recipe (ingredients, directions)
   }
+  def unapply(recipe: Recipe): Option[(List[String], List[String])] =
+    Some((recipe.ingredients, recipe.directions))
 }
 
 object Cookbook {
-  val pbj = Recipe.make(
+  val pbj = Recipe(
     List("peanut butter", "jelly", "bread"),
     List("just do it"))
-  val pankakes = Recipe.make(
+  val pancakes = Recipe(
     List("water", "milk", "some else"),
     List("just do it NOW!"))
 }
