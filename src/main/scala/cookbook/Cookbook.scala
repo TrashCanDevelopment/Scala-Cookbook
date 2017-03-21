@@ -8,26 +8,29 @@ case class Recipe(ingredients: Map[String, Mass], directions: List[String]) {
       if have < need
     } yield name
 }
-
-sealed abstract class Mass extends Ordered[Mass] {
+trait Measured {
   def amount: Double
+  def symbol: String
+  override def toString: String = amount+symbol
+}
+sealed abstract class Mass extends Ordered[Mass] with Measured {
   def toGrams: Grams
   def compare(that: Mass): Int = (this.toGrams.amount - that.toGrams.amount).toInt
 }
 
 case class Grams(amount: Double) extends Mass {
-  override def toGrams: Grams = this
-  override def toString: String = amount + "g"
+  def toGrams = this
+  val symbol = "g"
 }
 
 case class Milligrams(amount: Double) extends Mass {
-  override def toGrams: Grams = Grams(amount / 1000)
-  override def toString: String = amount + "mg"
+  def toGrams = Grams(amount / 1000)
+  val symbol = "mg"
 }
 
 case class Kilograms(amount: Double) extends Mass {
-  override def toGrams: Grams = Grams(amount * 1000)
-  override def toString: String = amount + "kg"
+  def toGrams = Grams(amount * 1000)
+  val symbol = "kg"
 }
 
 object Cookbook {
